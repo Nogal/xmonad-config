@@ -24,14 +24,16 @@
 -- Alt + Shift + C                   Kill Focused Window
 -- Alt + Click                       Pull Window to Floating Position
 -- Alt + t                           Tile Floating Window
+-- Alt + Escape                      Toggle Panel
  
 import XMonad
 
 import XMonad.Config.Desktop
 
-import XMonad.Hooks.EwmhDesktops
+--import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 
+import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ToggleLayouts
@@ -39,7 +41,7 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Util.EZConfig
 
 manageHook = manageDocks
-myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror tiled ||| noBorders Full  
+myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror  tiled ||| noBorders (fullscreenFloat Full)  
   where
      tiled   = ResizableTall nmaster delta frac slaves
      nmaster = 1
@@ -47,7 +49,7 @@ myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror ti
      delta   = 3/100
      slaves = [] 
 
-main = xmonad $ ewmh desktopConfig 
+main = xmonad $ desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
         , handleEventHook = handleEventHook desktopConfig <+> docksEventHook <+> fullscreenEventHook }
@@ -55,7 +57,8 @@ main = xmonad $ ewmh desktopConfig
          `additionalKeysP`
          [ ("M1-d", sendMessage MirrorShrink)
          , ("M1-g", sendMessage MirrorExpand)
-         , ("M1-f", sendMessage (Toggle "Full")) 
+         , ("M1-f", sendMessage $ Toggle "Full") 
+         , ("M1-<Escape>", sendMessage ToggleStruts) 
          , ("M4-<Space>", spawn "synapse")
          , ("M4-w", spawn "firefox")
          , ("M4-m", spawn "thunderbird")
