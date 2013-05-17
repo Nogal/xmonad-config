@@ -30,7 +30,6 @@ import XMonad
 
 import XMonad.Config.Desktop
 
---import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 
 import XMonad.Layout.Fullscreen
