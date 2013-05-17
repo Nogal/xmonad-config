@@ -25,6 +25,8 @@
 -- Alt + Click                       Pull Window to Floating Position
 -- Alt + t                           Tile Floating Window
 -- Alt + Escape                      Toggle Panel
+-- Alt + q                           Recompile XMonad
+-- Alt + Shift + Delete              Quit XMonad
  
 import XMonad
 
@@ -39,6 +41,8 @@ import XMonad.Layout.ToggleLayouts
 
 import XMonad.Util.EZConfig
 
+import System.Exit
+import System.IO
 manageHook = manageDocks
 myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror  tiled ||| noBorders (fullscreenFloat Full)  
   where
@@ -52,12 +56,13 @@ main = xmonad $ desktopConfig
         { modMask = mod1Mask
         , layoutHook = myLayout 
         , handleEventHook = handleEventHook desktopConfig <+> docksEventHook <+> fullscreenEventHook }
-        -- `removeKeysP` [("M1-S-q")]
+         `removeKeysP` [("M1-S-q")]
          `additionalKeysP`
          [ ("M1-d", sendMessage MirrorShrink)
          , ("M1-g", sendMessage MirrorExpand)
          , ("M1-f", sendMessage $ Toggle "Full") 
          , ("M1-<Escape>", sendMessage ToggleStruts) 
+         , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
          , ("M4-<Space>", spawn "synapse")
          , ("M4-w", spawn "firefox")
          , ("M4-m", spawn "thunderbird")
