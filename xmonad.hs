@@ -67,5 +67,5 @@ main = xmonad $ desktopConfig
          , ("M4-w", spawn "firefox")
          , ("M4-m", spawn "thunderbird")
          , ("M4-t", spawn "terminator")
-         , ("M4-f", spawn "nautilus")
+         , ("M4-f", spawn "nemo")
          ]
