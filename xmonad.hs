@@ -55,7 +55,8 @@ myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror  t
 main = xmonad $ desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
-        , handleEventHook = handleEventHook desktopConfig <+> docksEventHook <+> fullscreenEventHook }
+        , handleEventHook = handleEventHook desktopConfig <+> docksEventHook <+> fullscreenEventHook 
+        , focusedBorderColor = "#663399" }
          `removeKeysP` [("M1-S-q")]
          `additionalKeysP`
          [ ("M1-d", sendMessage MirrorShrink)
