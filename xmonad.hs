@@ -40,7 +40,7 @@ import System.Exit
 import System.IO
 
 manageHook = manageDocks
-myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror  tiled ||| noBorders (fullscreenFloat Full)  
+myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror tiled ||| noBorders (fullscreenFloat Full)  
   where
      tiled   = ResizableTall nmaster delta frac slaves
      nmaster = 1
@@ -62,6 +62,7 @@ main = xmonad $ desktopConfig
          , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
          , ("<XF86AudioLowerVolume>", spawn "amixer -c 0 set Master 2dB-")
          , ("<XF86AudioRaiseVolume>", spawn "amixer -c 0 set Master 2dB+")
+         , ("<XF86AudioMute>", spawn "amixer -D pulse set Master 1+ toggle")
          , ("M4-<Space>", spawn "synapse")
          , ("M4-w", spawn "firefox")
          , ("M4-m", spawn "thunderbird")
