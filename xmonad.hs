@@ -29,20 +29,16 @@
 -- Alt + Shift + Delete              Quit XMonad
  
 import XMonad
-
 import XMonad.Config.Desktop
-
 import XMonad.Hooks.ManageDocks
-
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ToggleLayouts
-
 import XMonad.Util.EZConfig
-
 import System.Exit
 import System.IO
+
 manageHook = manageDocks
 myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror  tiled ||| noBorders (fullscreenFloat Full)  
   where
@@ -64,6 +60,8 @@ main = xmonad $ desktopConfig
          , ("M1-f", sendMessage $ Toggle "Full") 
          , ("M1-<Escape>", sendMessage ToggleStruts) 
          , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
+         , ("<XF86AudioLowerVolume>", spawn "amixer -c 0 set Master 2dB-")
+         , ("<XF86AudioRaiseVolume>", spawn "amixer -c 0 set Master 2dB+")
          , ("M4-<Space>", spawn "synapse")
          , ("M4-w", spawn "firefox")
          , ("M4-m", spawn "thunderbird")

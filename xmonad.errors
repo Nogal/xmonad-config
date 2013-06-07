@@ -1,4 +1,0 @@
-/usr/bin/ld: reopening xmonad-i386-linux: Text file busy
-
-/usr/bin/ld: final link failed: Text file busy
-collect2: error: ld returned 1 exit status
