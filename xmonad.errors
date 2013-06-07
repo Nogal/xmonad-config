@@ -1,0 +1,18 @@
+
+xmonad.hs:52:31:
+    No instance for (Show a0) arising from a use of `show'
+    The type variable `a0' is ambiguous
+    Possible cause: the monomorphism restriction applied to the following:
+      alert :: a0 -> X () (bound at xmonad.hs:52:1)
+    Probable fix: give these definition(s) an explicit type signature
+                  or use -XNoMonomorphismRestriction
+    Note: there are several potential instances:
+      instance Show (AvoidStruts a)
+        -- Defined in `XMonad.Hooks.ManageDocks'
+      instance Show XMonad.Hooks.ManageDocks.RectC
+        -- Defined in `XMonad.Hooks.ManageDocks'
+      instance Show SetStruts -- Defined in `XMonad.Hooks.ManageDocks'
+      ...plus 124 others
+    In the second argument of `(.)', namely `show'
+    In the expression: dzenConfig centered . show
+    In an equation for `alert': alert = dzenConfig centered . show
