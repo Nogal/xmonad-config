@@ -1,0 +1,4 @@
+#!/bin/bash
+
+amixer get -c 0 Master | grep % | sed -re 's/^[^\[]*//' | sed -re 's/(.+)\%.+$/\1/' | sed 's/^.//' | \
+dzen2 -p 1 -h 133 -w 250 -fg "#80c0ff" -bg "#000040" -x 1550 -y 75 -fn -sony-*-*-*-*--26-*-*-*-*-*-*-*
