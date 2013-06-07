@@ -35,7 +35,6 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ToggleLayouts
---import XMonad.Util.Dzen
 import XMonad.Util.EZConfig
 import System.Exit
 import System.IO
@@ -48,13 +47,6 @@ myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror ti
      frac   = 1/2
      delta   = 3/100
      slaves = [] 
-{-
-alert = dzenConfig centered . show 
-centered =
-        onCurr (center 300 166)
-    >=> font "-*-clearlyu-*-r-*-*-64-*-*-*-*-*-*-*"
-    >=> addArgs ["-fg", "#80c0ff"]
-    >=> addArgs ["-bg", "#000040"] -}
 
 main = xmonad $ desktopConfig 
         { modMask = mod1Mask
@@ -68,8 +60,8 @@ main = xmonad $ desktopConfig
          , ("M1-f", sendMessage $ Toggle "Full") 
          , ("M1-<Escape>", sendMessage ToggleStruts) 
          , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
-         , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB- && ~/.xmonad/dzen-plugin" {- >>= alert -})
-         , ("<XF86AudioRaiseVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB+ && ~/.xmonad/dzen-plugin" {- >>= alert -})
+         , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB- && ~/.xmonad/dzen-plugin")
+         , ("<XF86AudioRaiseVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB+ && ~/.xmonad/dzen-plugin")
          , ("<XF86AudioMute>", spawn "amixer -q -D pulse set Master 1+ toggle")
          , ("<XF86Video>", spawn "rhythmbox")
          , ("M4-<Space>", spawn "synapse")
