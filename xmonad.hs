@@ -32,6 +32,8 @@ import XMonad
 import XMonad.Config.Desktop
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.GridVariants
+import XMonad.Layout.Master
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ToggleLayouts
@@ -40,7 +42,7 @@ import System.Exit
 import System.IO
 
 manageHook = manageDocks
-myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror tiled ||| noBorders (fullscreenFloat Full)  
+myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror (tiled) ||| (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100)) ||| noBorders (fullscreenFloat Full)  
   where
      tiled   = ResizableTall nmaster delta frac slaves
      nmaster = 1
@@ -57,6 +59,10 @@ main = xmonad $ desktopConfig
          `additionalKeysP`
          [ ("M1-d", sendMessage MirrorShrink)
          , ("M1-g", sendMessage MirrorExpand)
+         , ("M1-S-<KP_Add>", sendMessage $ IncMasterCols 1)
+         , ("M1-S-<KP_Subtract>", sendMessage $ IncMasterCols (-1))
+         , ("M1-C-<KP_Add>", sendMessage $ IncMasterRows 1)
+         , ("M1-C-<KP_Subtract>", sendMessage $ IncMasterRows (-1))
          , ("M1-f", sendMessage $ Toggle "Full") 
          , ("M1-<Escape>", sendMessage ToggleStruts) 
          , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
