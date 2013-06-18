@@ -15,6 +15,8 @@
 
 --------------------------Window/Layout Management-----------------------
 -- Alt + H/L                         Shink/Expand Mater Area
+-- Alt + w/v                         Swap Focused Display
+-- Alt + W/V                         Send Window to Focused Display
 -- Alt + D/G                         Mirror Shrink/Expand
 -- Alt + ,/.                         Increment/Deincrement Master Area
 -- Alt + j/k                         Cycle active window  
@@ -29,6 +31,7 @@
 -- Alt + Shift + Delete              Quit XMonad
  
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Fullscreen
@@ -59,6 +62,10 @@ main = xmonad $ desktopConfig
          `additionalKeysP`
          [ ("M1-d", sendMessage MirrorShrink)
          , ("M1-g", sendMessage MirrorExpand)
+         , ("M1-w", nextScreen)
+         , ("M1-S-w", shiftNextScreen >> nextScreen)
+         , ("M1-v", prevScreen)
+         , ("M1-S-v", shiftPrevScreen >> prevScreen)
          , ("M1-S-<KP_Add>", sendMessage $ IncMasterCols 1)
          , ("M1-S-<KP_Subtract>", sendMessage $ IncMasterCols (-1))
          , ("M1-<KP_Add>", sendMessage $ IncMasterRows 1)
