@@ -30,33 +30,37 @@
 -- Alt + q                           Recompile XMonad
 -- Alt + Shift + Delete              Quit XMonad
  
-import XMonad
+import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout hiding ( (|||) )
+import XMonad.Layout.Circle
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.GridVariants
+import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Master
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spiral
 import XMonad.Layout.ToggleLayouts
 import XMonad.Util.EZConfig
 import System.Exit
 import System.IO
 
 manageHook = manageDocks
-myLayout = avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| Mirror (tiled) ||| (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100)) ||| noBorders (fullscreenFloat Full)  
-  where
-     tiled   = ResizableTall nmaster delta frac slaves
-     nmaster = 1
-     frac   = 1/2
-     delta   = 3/100
-     slaves = [] 
+myLayout =  avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| toggleLayouts Full (Mirror (tiled)) ||| toggleLayouts Full (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100)) ||| toggleLayouts Full Circle 
+    where 
+            tiled   = ResizableTall nmaster delta frac slaves
+            nmaster = 1
+            frac    = 1/2
+            delta   = 3/100
+            slaves  = [] 
 
 main = xmonad $ desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
-        , handleEventHook = handleEventHook desktopConfig <+> docksEventHook <+> fullscreenEventHook 
+        , handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook desktopConfig
         , focusedBorderColor = "#663399" }
          `removeKeysP` [("M1-S-q")]
          `additionalKeysP`
@@ -70,7 +74,8 @@ main = xmonad $ desktopConfig
          , ("M1-S-<KP_Subtract>", sendMessage $ IncMasterCols (-1))
          , ("M1-<KP_Add>", sendMessage $ IncMasterRows 1)
          , ("M1-<KP_Subtract>", sendMessage $ IncMasterRows (-1))
-         , ("M1-f", sendMessage $ Toggle "Full") 
+         , ("M1-f", sendMessage $ Toggle  "Full") 
+         , ("M1-S-<Space>", sendMessage $ JumpToLayout "Circle") 
          , ("M1-<Escape>", sendMessage ToggleStruts) 
          , ("M1-S-<Delete>", io (exitWith ExitSuccess)) 
          , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB- && ~/.xmonad/dzen-plugin")
