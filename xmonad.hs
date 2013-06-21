@@ -49,7 +49,10 @@ import System.Exit
 import System.IO
 
 manageHook = manageDocks
-myLayout =  avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| toggleLayouts Full (Mirror (tiled)) ||| toggleLayouts Full (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100)) ||| toggleLayouts Full Circle 
+myLayout =  avoidStruts $ smartBorders $ toggleLayouts Full (tiled) 
+    ||| toggleLayouts Full (Mirror (tiled)) ||| toggleLayouts Full 
+    (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 
+    2 3 (2/3) (16/10) (5/100)) ||| toggleLayouts Full Circle 
     where 
             tiled   = ResizableTall nmaster delta frac slaves
             nmaster = 1
@@ -60,7 +63,8 @@ myLayout =  avoidStruts $ smartBorders $ toggleLayouts Full (tiled) ||| toggleLa
 main = xmonad $ desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
-        , handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook desktopConfig
+        , handleEventHook = docksEventHook <+> fullscreenEventHook <+> 
+        handleEventHook desktopConfig
         , focusedBorderColor = "#663399" }
          `removeKeysP` [("M1-S-q")]
          `additionalKeysP`
