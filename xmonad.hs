@@ -33,6 +33,7 @@
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout hiding ( (|||) )
 import XMonad.Layout.Circle
@@ -49,21 +50,24 @@ import System.Exit
 import System.IO
 
 manageHook = manageDocks
-myLayout =  avoidStruts $ smartBorders $ toggleLayouts Full (tiled) 
-    ||| toggleLayouts Full (Mirror (tiled)) ||| toggleLayouts Full 
+myLayout =  avoidStruts $ smartBorders $ toggleLayouts (noBorders Full) (tiled) 
+    ||| toggleLayouts (noBorders Full) (Mirror (tiled)) ||| toggleLayouts (noBorders Full) 
     (mastered (1/100) (1/2) $ SplitGrid XMonad.Layout.GridVariants.L 
-    2 3 (2/3) (16/10) (5/100)) ||| toggleLayouts Full Circle 
+    2 3 (2/3) (16/10) (5/100)) ||| toggleLayouts (noBorders Full) Circle 
     where 
             tiled   = ResizableTall nmaster delta frac slaves
             nmaster = 1
             frac    = 1/2
             delta   = 3/100
             slaves  = [] 
+myStartupHook :: X ()
+myStartupHook = do spawn "~/.xmonad/startup_script.sh"
 
-main = xmonad $ desktopConfig 
+main = xmonad $ ewmh desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
-        , handleEventHook = docksEventHook <+> fullscreenEventHook <+> 
+        , startupHook = myStartupHook
+        , handleEventHook = docksEventHook <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook <+> 
         handleEventHook desktopConfig
         , focusedBorderColor = "#663399" }
          `removeKeysP` [("M1-S-q")]
