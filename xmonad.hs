@@ -46,6 +46,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spiral
 import XMonad.Layout.ToggleLayouts
 import XMonad.Util.EZConfig
+import XMonad.Util.Replace
 import System.Exit
 import System.IO
 
@@ -63,7 +64,9 @@ myLayout =  avoidStruts $ smartBorders $ toggleLayouts (noBorders Full) (tiled)
 myStartupHook :: X ()
 myStartupHook = do spawn "~/.xmonad/startup_script.sh"
 
-main = xmonad $ ewmh desktopConfig 
+main = do 
+   replace 
+   xmonad $ ewmh desktopConfig 
         { modMask = mod1Mask
         , layoutHook = myLayout 
         , startupHook = myStartupHook
@@ -89,6 +92,7 @@ main = xmonad $ ewmh desktopConfig
          , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB- && ~/.xmonad/dzen-plugin")
          , ("<XF86AudioRaiseVolume>", spawn "amixer -q -D pulse -c 0 set Master 2dB+ && ~/.xmonad/dzen-plugin")
          , ("<XF86AudioMute>", spawn "amixer -q -D pulse set Master 1+ toggle")
+         , ("M1-S-C-<Backspace>", restart "/home/nogal/.xmonad/openbox-xmonad.sh" True)
          , ("<XF86Video>", spawn "rhythmbox")
          , ("M4-<Space>", spawn "synapse")
          , ("M4-w", spawn "firefox")
