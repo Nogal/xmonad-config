@@ -32,6 +32,7 @@
  
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
+import XMonad.Actions.FloatKeys
 import XMonad.Config.Desktop
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -43,7 +44,6 @@ import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Master
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Spiral
 import XMonad.Layout.ToggleLayouts
 import XMonad.Util.EZConfig
 import XMonad.Util.Replace
@@ -99,4 +99,17 @@ main = do
          , ("M4-m", spawn "thunderbird")
          , ("M4-t", spawn "terminator")
          , ("M4-f", spawn "nemo")
+         , ("M1-n", withFocused float)
+         , ("M1-S-<R>", withFocused (keysResizeWindow (10,10) (0,0)))
+         , ("M1-C-<L>", withFocused (keysResizeWindow (-10,10) (0,0)))
+         , ("M1-S-<L>", withFocused (keysResizeWindow (10,10) (1,1)))
+         , ("M1-C-<R>", withFocused (keysResizeWindow (-10,0) (1,1)))
+         , ("M1-S-<U>", withFocused (keysResizeWindow (0,20) (1,1)))
+         , ("M1-C-<D>", withFocused (keysResizeWindow (0,-20) (1,1)))
+         , ("M1-S-<D>", withFocused (keysResizeWindow (0,20) (1,0)))
+         , ("M1-C-<U>", withFocused (keysResizeWindow (0,-20) (1,0)))
+         , ("M1-<D>", withFocused (keysMoveWindow (0,20)))
+         , ("M1-<R>", withFocused (keysMoveWindow (20,0)))
+         , ("M1-<L>", withFocused (keysMoveWindow (-20,0)))
+         , ("M1-<U>", withFocused (keysMoveWindow (0,-20)))
          ]
